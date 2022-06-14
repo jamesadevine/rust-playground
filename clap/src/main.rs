@@ -1,8 +1,5 @@
-use clap::{App, Arg};
-use std::fmt;
+use clap::{App};
 use std::fs;
-use std::collections::HashMap;
-use yaml_rust::{YamlLoader, Yaml};
 
 pub struct CLIApplication {
     name: String,
@@ -21,7 +18,7 @@ pub fn context(yaml_path: &str) -> App<'static, 'static> {
         Err(e) => panic!("unable to open configuration file: {}", e),
     };  
     
-    let yml_docs = match YamlLoader::load_from_str(&command_configuration) {
+    let yml_docs = match clap::YamlLoader::load_from_str(&command_configuration) {
         Ok(yml) => yml,
         Err(e)=> panic!("Unable to parse yaml configuration: {}", e),
     };
@@ -32,16 +29,9 @@ pub fn context(yaml_path: &str) -> App<'static, 'static> {
     let app_name = document["name"].as_str().unwrap();
     println!("{:?}",document);
 
-    // return from_new("app");
-
-    return CLIApplication {
-        name: String::from(yaml_path),
-        cli: App::from_yaml(&yml_docs[0]),
-    }
+    App::from_yaml(&yml_docs[0])
 }
 
-
-
 fn main() {
-    println!("Hello, world!");
+    let cli = context("../commands.yml");
 }
