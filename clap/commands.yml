@@ -1,0 +1,19 @@
+name: "tool"
+version: "0.1"
+about: "description"
+author: "m00am"
+
+subcommands:
+  - subcommand1:
+      args:
+        - path:
+            index: "1"
+            required: true
+            default_value: "/tmp/"
+            help: "Dummy Path"
+  - subcommand2:
+      args:
+         - other_path:
+             index: "1"
+             required: true
+             help: "A second dummy path"
